@@ -1,0 +1,3 @@
+"0","altitude_max <- max(volcano)"
+"0",""
+"0","positions_max <- which(volcano == altitude_max, arr.ind = TRUE)"

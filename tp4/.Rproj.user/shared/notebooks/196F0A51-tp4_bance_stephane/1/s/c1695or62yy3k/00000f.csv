@@ -1,0 +1,2 @@
+"0","moyennes_lignes <- rowMeans(volcano)"
+"0","ligne_plus_haute <- which.max(moyennes_lignes)"

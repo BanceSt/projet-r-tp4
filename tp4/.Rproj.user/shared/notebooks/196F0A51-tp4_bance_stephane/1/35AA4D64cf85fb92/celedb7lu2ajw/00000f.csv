@@ -1,0 +1,5 @@
+"0","decomp <- eigen(t(P))"
+"0","pos_pi <- which(round(decomp$values, 10) == 1)"
+"0","vecteur_pi <- decomp$vectors[, pos_pi]"
+"0","pi_stationnaire <- vecteur_pi / sum(vecteur_pi)"
+"0","names(pi_stationnaire) <- c(""A"", ""B"", ""C"")"
