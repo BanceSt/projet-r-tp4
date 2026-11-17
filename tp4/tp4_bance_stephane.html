@@ -412,7 +412,17 @@ display: none;
 <li><a href="#b-7" id="toc-b-7">b</a></li>
 <li><a href="#c-7" id="toc-c-7">c</a></li>
 <li><a href="#d-2" id="toc-d-2">d</a></li>
+<li><a href="#e-1" id="toc-e-1">e</a></li>
 </ul></li>
+</ul></li>
+<li><a href="#partie-c" id="toc-partie-c">Partie C</a>
+<ul>
+<li><a href="#c1" id="toc-c1">C1</a></li>
+<li><a href="#c2" id="toc-c2">C2</a></li>
+<li><a href="#c3" id="toc-c3">C3</a></li>
+<li><a href="#c4" id="toc-c4">c4</a></li>
+<li><a href="#c5" id="toc-c5">c5</a></li>
+<li><a href="#c6" id="toc-c6">C6</a></li>
 </ul></li>
 </ul>
 </div>
@@ -709,8 +719,130 @@ de cette matrice sont identiques (ou presque, aux erreurs d’arrondi
 près). Chaque ligne vaut environ 46.81 % pour A, 34.04 % pour B et 19.15
 % pour C. Cela signifie qu’après un très grand nombre de mois, la
 probabilité de se retrouver chez un opérateur donné ne dépend plus du
-tout de l’opérateur de départ ### e</p>
+tout de l’opérateur de départ.</p>
 </div>
+<div id="e-1" class="section level3">
+<h3>e</h3>
+<pre class="r"><code>decomp &lt;- eigen(t(P))
+pos_pi &lt;- which(round(decomp$values, 10) == 1)
+vecteur_pi &lt;- decomp$vectors[, pos_pi]
+pi_stationnaire &lt;- vecteur_pi / sum(vecteur_pi)
+names(pi_stationnaire) &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)</code></pre>
+</div>
+</div>
+</div>
+<div id="partie-c" class="section level1">
+<h1>Partie C</h1>
+<div id="c1" class="section level2">
+<h2>C1</h2>
+<pre class="r"><code>total &lt;- sum(Titanic)
+par_classe &lt;- apply(Titanic, &quot;Class&quot;, sum)
+part_equipage &lt;- 100 * par_classe[&quot;Crew&quot;] / total
+
+par_classe</code></pre>
+<pre><code>##  1st  2nd  3rd Crew 
+##  325  285  706  885</code></pre>
+<p>Il y avait 2201 personnes à bord : 325 en 1re classe, 285 en 2e
+classe, 706 en 3e classe et 885 membres d’équipage. L’équipage
+représentait donc 40.2 % des personnes à bord.</p>
+</div>
+<div id="c2" class="section level2">
+<h2>C2</h2>
+<pre class="r"><code>taux_global &lt;- 100 * sum(Titanic[, , , &quot;Yes&quot;]) / sum(Titanic)
+
+tab_classe &lt;- apply(Titanic, c(&quot;Class&quot;, &quot;Survived&quot;), sum)
+taux_classe &lt;- 100 * prop.table(tab_classe, 1)[, &quot;Yes&quot;]
+
+tab_sexe &lt;- apply(Titanic, c(&quot;Sex&quot;, &quot;Survived&quot;), sum)
+taux_sexe &lt;- 100 * prop.table(tab_sexe, 1)[, &quot;Yes&quot;]
+
+round(taux_classe, 1)</code></pre>
+<pre><code>##  1st  2nd  3rd Crew 
+## 62.5 41.4 25.2 24.0</code></pre>
+<pre class="r"><code>round(taux_sexe, 1)</code></pre>
+<pre><code>##   Male Female 
+##   21.2   73.2</code></pre>
+<p>Le taux de survie global est de 32.3 %. Par classe, il est de 62.5 %
+en 1re classe, 41.4 % en 2e, 25.2 % en 3e et 24 % pour l’équipage. Par
+sexe, il est de 73.2 % pour les femmes contre 21.2 % pour les
+hommes.</p>
+</div>
+<div id="c3" class="section level2">
+<h2>C3</h2>
+<pre class="r"><code>sexe_age &lt;- apply(Titanic, c(&quot;Sex&quot;, &quot;Age&quot;, &quot;Survived&quot;), sum)
+taux_sexe_age &lt;- 100 * sexe_age[, , &quot;Yes&quot;] / (sexe_age[, , &quot;Yes&quot;] + sexe_age[, , &quot;No&quot;])
+
+round(taux_sexe_age, 1)</code></pre>
+<pre><code>##         Age
+## Sex      Child Adult
+##   Male    45.3  20.3
+##   Female  62.2  74.4</code></pre>
+<p>Les taux de survie sont de 62.2 % pour les filles, 45.3 % pour les
+garçons, 74.4 % pour les femmes adultes et 20.3 % pour les hommes
+adultes. La règle a été appliquée en grande partie : les femmes (adultes
+ou enfants) et les enfants s’en sortent bien mieux que les hommes
+adultes.</p>
+</div>
+<div id="c4" class="section level2">
+<h2>c4</h2>
+<pre class="r"><code>classe_sexe &lt;- apply(Titanic, c(&quot;Class&quot;, &quot;Sex&quot;, &quot;Survived&quot;), sum)
+taux_classe_sexe &lt;- 100 * classe_sexe[, , &quot;Yes&quot;] / (classe_sexe[, , &quot;Yes&quot;] + classe_sexe[, , &quot;No&quot;])
+
+round(taux_classe_sexe, 1)</code></pre>
+<pre><code>##       Sex
+## Class  Male Female
+##   1st  34.4   97.2
+##   2nd  14.0   87.7
+##   3rd  17.3   45.9
+##   Crew 22.3   87.0</code></pre>
+<p>Les femmes de 3e classe ont un taux de survie de 45.9 %, contre 34.4
+% pour les hommes de 1re classe. Les deux valeurs sont proches : le sexe
+et la classe ont tous deux joué un rôle important. Être une femme
+apportait un avantage considérable à classe égale, mais l’appartenance à
+la 1re classe compensait presque entièrement le fait d’être un homme
+face à une femme de 3e classe.</p>
+</div>
+<div id="c5" class="section level2">
+<h2>c5</h2>
+<pre class="r"><code>enfants &lt;- apply(Titanic[, , &quot;Child&quot;, ], c(&quot;Class&quot;, &quot;Survived&quot;), sum)
+enfants_total &lt;- rowSums(enfants)
+enfants_survivants &lt;- enfants[, &quot;Yes&quot;]
+
+cbind(Total = enfants_total, Survivants = enfants_survivants)</code></pre>
+<pre><code>##      Total Survivants
+## 1st      6          6
+## 2nd     24         24
+## 3rd     79         27
+## Crew     0          0</code></pre>
+<pre class="r"><code>tous_survecu &lt;- all(enfants[c(&quot;1st&quot;, &quot;2nd&quot;), &quot;No&quot;] == 0)</code></pre>
+<p>Il y avait 6 enfants en 1re classe, 24 en 2e, 79 en 3e et 0 dans
+l’équipage. Les survivants sont au nombre de 6, 24, 27 et 0
+respectivement. Oui, tous les enfants de 1re et 2e classe ont survécu,
+alors que 52 enfants de 3e classe sur 79 sont morts.</p>
+</div>
+<div id="c6" class="section level2">
+<h2>C6</h2>
+<pre class="r"><code>df_titanic &lt;- as.data.frame(Titanic)
+head(df_titanic)</code></pre>
+<pre><code>##   Class    Sex   Age Survived Freq
+## 1   1st   Male Child       No    0
+## 2   2nd   Male Child       No    0
+## 3   3rd   Male Child       No   35
+## 4  Crew   Male Child       No    0
+## 5   1st Female Child       No    0
+## 6   2nd Female Child       No    0</code></pre>
+<pre class="r"><code>xt &lt;- xtabs(Freq ~ Class + Survived, data = df_titanic)
+taux_classe_df &lt;- 100 * prop.table(xt, 1)[, &quot;Yes&quot;]
+round(taux_classe_df, 1)</code></pre>
+<pre><code>##  1st  2nd  3rd Crew 
+## 62.5 41.4 25.2 24.0</code></pre>
+<pre class="r"><code>all.equal(taux_classe_df, taux_classe)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>On obtient 32 lignes, car <code>as.data.frame()</code> crée une ligne
+par combinaison de modalités des quatre variables (4 classes × 2 sexes ×
+2 âges × 2 issues), la colonne <code>Freq</code> contenant l’effectif de
+chaque combinaison. Les taux de survie par classe retrouvés avec
+<code>xtabs()</code> sont identiques à ceux de la question C2.</p>
 </div>
 </div>
 

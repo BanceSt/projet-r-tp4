@@ -257,3 +257,96 @@ En calculant P64 de la même façon, on remarque que toutes les lignes de cette 
 
 
 ### e
+
+```{r}
+decomp <- eigen(t(P))
+pos_pi <- which(round(decomp$values, 10) == 1)
+vecteur_pi <- decomp$vectors[, pos_pi]
+pi_stationnaire <- vecteur_pi / sum(vecteur_pi)
+names(pi_stationnaire) <- c("A", "B", "C")
+```
+
+
+
+# Partie C 
+
+## C1
+
+```{r c1}
+total <- sum(Titanic)
+par_classe <- apply(Titanic, "Class", sum)
+part_equipage <- 100 * par_classe["Crew"] / total
+
+par_classe
+```
+
+Il y avait `r total` personnes à bord : `r par_classe["1st"]` en 1re classe, `r par_classe["2nd"]` en 2e classe, `r par_classe["3rd"]` en 3e classe et `r par_classe["Crew"]` membres d'équipage. L'équipage représentait donc `r round(part_equipage, 1)` % des personnes à bord.
+
+## C2
+
+```{r c2}
+taux_global <- 100 * sum(Titanic[, , , "Yes"]) / sum(Titanic)
+
+tab_classe <- apply(Titanic, c("Class", "Survived"), sum)
+taux_classe <- 100 * prop.table(tab_classe, 1)[, "Yes"]
+
+tab_sexe <- apply(Titanic, c("Sex", "Survived"), sum)
+taux_sexe <- 100 * prop.table(tab_sexe, 1)[, "Yes"]
+
+round(taux_classe, 1)
+round(taux_sexe, 1)
+```
+
+Le taux de survie global est de `r round(taux_global, 1)` %. Par classe, il est de `r round(taux_classe["1st"], 1)` % en 1re classe, `r round(taux_classe["2nd"], 1)` % en 2e, `r round(taux_classe["3rd"], 1)` % en 3e et `r round(taux_classe["Crew"], 1)` % pour l'équipage. Par sexe, il est de `r round(taux_sexe["Female"], 1)` % pour les femmes contre `r round(taux_sexe["Male"], 1)` % pour les hommes.
+
+## C3
+
+```{r c3}
+sexe_age <- apply(Titanic, c("Sex", "Age", "Survived"), sum)
+taux_sexe_age <- 100 * sexe_age[, , "Yes"] / (sexe_age[, , "Yes"] + sexe_age[, , "No"])
+
+round(taux_sexe_age, 1)
+```
+
+Les taux de survie sont de `r round(taux_sexe_age["Female", "Child"], 1)` % pour les filles, `r round(taux_sexe_age["Male", "Child"], 1)` % pour les garçons, `r round(taux_sexe_age["Female", "Adult"], 1)` % pour les femmes adultes et `r round(taux_sexe_age["Male", "Adult"], 1)` % pour les hommes adultes. La règle a été appliquée en grande partie : les femmes (adultes ou enfants) et les enfants s'en sortent bien mieux que les hommes adultes. 
+
+
+## c4
+
+```{r c4}
+classe_sexe <- apply(Titanic, c("Class", "Sex", "Survived"), sum)
+taux_classe_sexe <- 100 * classe_sexe[, , "Yes"] / (classe_sexe[, , "Yes"] + classe_sexe[, , "No"])
+
+round(taux_classe_sexe, 1)
+```
+
+Les femmes de 3e classe ont un taux de survie de `r round(taux_classe_sexe["3rd", "Female"], 1)` %, contre `r round(taux_classe_sexe["1st", "Male"], 1)` % pour les hommes de 1re classe. Les deux valeurs sont proches : le sexe et la classe ont tous deux joué un rôle important. Être une femme apportait un avantage considérable à classe égale, mais l'appartenance à la 1re classe compensait presque entièrement le fait d'être un homme face à une femme de 3e classe.
+
+## c5
+
+```{r c5}
+enfants <- apply(Titanic[, , "Child", ], c("Class", "Survived"), sum)
+enfants_total <- rowSums(enfants)
+enfants_survivants <- enfants[, "Yes"]
+
+cbind(Total = enfants_total, Survivants = enfants_survivants)
+
+tous_survecu <- all(enfants[c("1st", "2nd"), "No"] == 0)
+```
+
+Il y avait `r enfants_total["1st"]` enfants en 1re classe, `r enfants_total["2nd"]` en 2e, `r enfants_total["3rd"]` en 3e et `r enfants_total["Crew"]` dans l'équipage. Les survivants sont au nombre de `r enfants_survivants["1st"]`, `r enfants_survivants["2nd"]`, `r enfants_survivants["3rd"]` et `r enfants_survivants["Crew"]` respectivement. `r if (tous_survecu) "Oui" else "Non"`, `r if (tous_survecu) "tous les enfants de 1re et 2e classe ont survécu" else "certains enfants de 1re ou 2e classe n'ont pas survécu"`, alors que `r enfants_total["3rd"] - enfants_survivants["3rd"]` enfants de 3e classe sur `r enfants_total["3rd"]` sont morts.
+
+## C6
+
+```{r c6}
+df_titanic <- as.data.frame(Titanic)
+head(df_titanic)
+
+xt <- xtabs(Freq ~ Class + Survived, data = df_titanic)
+taux_classe_df <- 100 * prop.table(xt, 1)[, "Yes"]
+round(taux_classe_df, 1)
+
+all.equal(taux_classe_df, taux_classe)
+```
+
+On obtient `r nrow(df_titanic)` lignes, car `as.data.frame()` crée une ligne par combinaison de modalités des quatre variables (4 classes × 2 sexes × 2 âges × 2 issues), la colonne `Freq` contenant l'effectif de chaque combinaison. Les taux de survie par classe retrouvés avec `xtabs()` sont identiques à ceux de la question C2.

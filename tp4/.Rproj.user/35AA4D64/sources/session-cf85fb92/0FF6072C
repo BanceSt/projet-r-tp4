@@ -3,24 +3,24 @@
     "path": "~/coursR/tp4/tp4/tp4_bance_stephane.Rmd",
     "project_path": "tp4_bance_stephane.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "281874015",
     "contents": "",
-    "dirty": true,
+    "dirty": false,
     "created": 1794925011561.0,
     "source_on_save": false,
     "relative_order": 2,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "268,0",
-        "scrollLine": "255"
+        "cursorPosition": "351,328",
+        "scrollLine": "340"
     },
     "folds": "",
-    "lastKnownWriteTime": 1794932728,
+    "lastKnownWriteTime": 1794936409,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1794932752462,
+    "last_content_update": 1794936409271,
     "read_only": false,
     "read_only_alternatives": []
 }
