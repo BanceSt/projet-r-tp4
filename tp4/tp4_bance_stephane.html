@@ -424,6 +424,37 @@ display: none;
 <li><a href="#c5" id="toc-c5">c5</a></li>
 <li><a href="#c6" id="toc-c6">C6</a></li>
 </ul></li>
+<li><a href="#partie-d" id="toc-partie-d">Partie D</a>
+<ul>
+<li><a href="#d1" id="toc-d1">D1</a></li>
+<li><a href="#d2" id="toc-d2">D2</a>
+<ul>
+<li><a href="#a-8" id="toc-a-8">a</a></li>
+<li><a href="#b-8" id="toc-b-8">b</a></li>
+<li><a href="#c-8" id="toc-c-8">c</a></li>
+<li><a href="#d-3" id="toc-d-3">d</a></li>
+</ul></li>
+<li><a href="#d3" id="toc-d3">D3</a>
+<ul>
+<li><a href="#a-9" id="toc-a-9">a</a></li>
+<li><a href="#b-9" id="toc-b-9">b</a></li>
+<li><a href="#c-9" id="toc-c-9">c</a></li>
+<li><a href="#d-4" id="toc-d-4">d</a></li>
+<li><a href="#e-2" id="toc-e-2">e</a></li>
+</ul></li>
+<li><a href="#d4" id="toc-d4">D4</a>
+<ul>
+<li><a href="#a-10" id="toc-a-10">a</a></li>
+<li><a href="#b-10" id="toc-b-10">b</a></li>
+<li><a href="#c-10" id="toc-c-10">c</a></li>
+<li><a href="#d-5" id="toc-d-5">d</a></li>
+</ul></li>
+<li><a href="#d5" id="toc-d5">D5</a>
+<ul>
+<li><a href="#a-11" id="toc-a-11">a</a></li>
+<li><a href="#b-11" id="toc-b-11">b</a></li>
+</ul></li>
+</ul></li>
 </ul>
 </div>
 
@@ -843,6 +874,259 @@ par combinaison de modalités des quatre variables (4 classes × 2 sexes ×
 2 âges × 2 issues), la colonne <code>Freq</code> contenant l’effectif de
 chaque combinaison. Les taux de survie par classe retrouvés avec
 <code>xtabs()</code> sont identiques à ceux de la question C2.</p>
+</div>
+</div>
+<div id="partie-d" class="section level1">
+<h1>Partie D</h1>
+<div id="d1" class="section level2">
+<h2>D1</h2>
+<p>Prédictions, écrites avant d’exécuter :</p>
+<ul>
+<li><code>l[1]</code> : de classe <code>list</code>, une liste de
+longueur 1 qui contient l’élément <code>a</code> (les entiers 1, 2,
+3).</li>
+<li><code>l[[1]]</code> : de classe <code>integer</code>, le vecteur
+<code>1 2 3</code>.</li>
+<li><code>l$c$e</code> : de classe <code>numeric</code>, la valeur
+<code>2.5</code>.</li>
+<li><code>l[[&quot;c&quot;]][&quot;d&quot;]</code> : de classe <code>list</code>, une liste
+de longueur 1 qui contient l’élément <code>d</code> (la valeur
+<code>TRUE</code>).</li>
+<li><code>length(l)</code> : de classe <code>integer</code>, la valeur
+<code>3</code>.</li>
+<li><code>unlist(l)</code> : de classe <code>character</code>, un
+vecteur nommé de 6 éléments (<code>a1</code>, <code>a2</code>,
+<code>a3</code>, <code>b</code>, <code>c.d</code>, <code>c.e</code>) de
+valeurs <code>&quot;1&quot;</code>, <code>&quot;2&quot;</code>, <code>&quot;3&quot;</code>,
+<code>&quot;x&quot;</code>, <code>&quot;TRUE&quot;</code>, <code>&quot;2.5&quot;</code>.</li>
+</ul>
+<pre class="r"><code>l &lt;- list(a = 1:3, b = &quot;x&quot;, c = list(d = TRUE, e = 2.5))
+
+l[1]</code></pre>
+<pre><code>## $a
+## [1] 1 2 3</code></pre>
+<pre class="r"><code>class(l[1])</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code>l[[1]]</code></pre>
+<pre><code>## [1] 1 2 3</code></pre>
+<pre class="r"><code>class(l[[1]])</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>l$c$e</code></pre>
+<pre><code>## [1] 2.5</code></pre>
+<pre class="r"><code>class(l$c$e)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>l[[&quot;c&quot;]][&quot;d&quot;]</code></pre>
+<pre><code>## $d
+## [1] TRUE</code></pre>
+<pre class="r"><code>class(l[[&quot;c&quot;]][&quot;d&quot;])</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code>length(l)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code>class(length(l))</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>unlist(l)</code></pre>
+<pre><code>##     a1     a2     a3      b    c.d    c.e 
+##    &quot;1&quot;    &quot;2&quot;    &quot;3&quot;    &quot;x&quot; &quot;TRUE&quot;  &quot;2.5&quot;</code></pre>
+<pre class="r"><code>class(unlist(l))</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<p>Les résultats correspondent aux prédictions. La différence vient de
+l’opérateur : <code>[</code> renvoie toujours une liste (une
+sous-liste), alors que <code>[[</code> et <code>$</code> extraient
+directement l’élément, ici le vecteur <code>1 2 3</code>. Dans
+<code>l[[&quot;c&quot;]][&quot;d&quot;]</code>, <code>[[</code> extrait la sous-liste
+<code>c</code>, puis <code>[</code> en garde seulement <code>d</code>,
+ce qui donne une liste. Enfin, <code>unlist()</code> aplatit la liste en
+un seul vecteur : comme il mélange des entiers, du texte, un booléen et
+un décimal, tout est converti en <code>character</code>.</p>
+</div>
+<div id="d2" class="section level2">
+<h2>D2</h2>
+<pre class="r"><code>fiche &lt;- list(
+  identite = list(nom = &quot;Martin&quot;, prenom = &quot;Léa&quot;, annee_naissance = 2003),
+  notes = c(R = 15, stat = 12, eco = 13.5, anglais = 14),
+  absences = 2L,
+  commentaires = c(&quot;Étudiante sérieuse et régulière.&quot;,
+                   &quot;Doit consolider ses bases en économie.&quot;)
+)</code></pre>
+<div id="a-8" class="section level3">
+<h3>a</h3>
+<p>Le prénom de deux façons :</p>
+<pre class="r"><code>fiche$identite$prenom</code></pre>
+<pre><code>## [1] &quot;Léa&quot;</code></pre>
+<pre class="r"><code>fiche[[&quot;identite&quot;]][[&quot;prenom&quot;]]</code></pre>
+<pre><code>## [1] &quot;Léa&quot;</code></pre>
+</div>
+<div id="b-8" class="section level3">
+<h3>b</h3>
+<p>La moyenne des notes :</p>
+<pre class="r"><code>mean(fiche$notes)</code></pre>
+<pre><code>## [1] 13.625</code></pre>
+</div>
+<div id="c-8" class="section level3">
+<h3>c</h3>
+<p>Ajout de l’âge :</p>
+<pre class="r"><code>fiche$age &lt;- 2026 - fiche$identite$annee_naissance
+fiche$age</code></pre>
+<pre><code>## [1] 23</code></pre>
+</div>
+<div id="d-3" class="section level3">
+<h3>d</h3>
+<p>Suppression des commentaires :</p>
+<pre class="r"><code>fiche$commentaires &lt;- NULL
+str(fiche)</code></pre>
+<pre><code>## List of 4
+##  $ identite:List of 3
+##   ..$ nom            : chr &quot;Martin&quot;
+##   ..$ prenom         : chr &quot;Léa&quot;
+##   ..$ annee_naissance: num 2003
+##  $ notes   : Named num [1:4] 15 12 13.5 14
+##   ..- attr(*, &quot;names&quot;)= chr [1:4] &quot;R&quot; &quot;stat&quot; &quot;eco&quot; &quot;anglais&quot;
+##  $ absences: int 2
+##  $ age     : num 23</code></pre>
+</div>
+</div>
+<div id="d3" class="section level2">
+<h2>D3</h2>
+<pre class="r"><code>promo &lt;- list(
+  list(nom = &quot;Awa&quot;, filiere = &quot;info&quot;, notes = c(15, 13.5, 17)),
+  list(nom = &quot;Bruno&quot;, filiere = &quot;stat&quot;, notes = c(9, 12)),
+  list(nom = &quot;Chen&quot;, filiere = &quot;info&quot;, notes = c(17, 15, 16, 18)),
+  list(nom = &quot;Dina&quot;, filiere = &quot;eco&quot;, notes = c(11.5, 9)),
+  list(nom = &quot;Elias&quot;, filiere = &quot;stat&quot;, notes = c(12, 14, 10))
+)</code></pre>
+<div id="a-9" class="section level3">
+<h3>a</h3>
+<pre class="r"><code>nb_etudiants &lt;- length(promo)
+nom_3 &lt;- promo[[3]]$nom</code></pre>
+<p>La liste contient 5 étudiants et le 3e s’appelle Chen.</p>
+</div>
+<div id="b-9" class="section level3">
+<h3>b</h3>
+<pre class="r"><code>noms &lt;- sapply(promo, &quot;[[&quot;, &quot;nom&quot;)
+filieres &lt;- sapply(promo, &quot;[[&quot;, &quot;filiere&quot;)
+noms</code></pre>
+<pre><code>## [1] &quot;Awa&quot;   &quot;Bruno&quot; &quot;Chen&quot;  &quot;Dina&quot;  &quot;Elias&quot;</code></pre>
+<pre class="r"><code>filieres</code></pre>
+<pre><code>## [1] &quot;info&quot; &quot;stat&quot; &quot;info&quot; &quot;eco&quot;  &quot;stat&quot;</code></pre>
+</div>
+<div id="c-9" class="section level3">
+<h3>c</h3>
+<pre class="r"><code>notes &lt;- lapply(promo, &quot;[[&quot;, &quot;notes&quot;)
+names(notes) &lt;- noms
+nb_notes &lt;- lengths(notes)
+notes</code></pre>
+<pre><code>## $Awa
+## [1] 15.0 13.5 17.0
+## 
+## $Bruno
+## [1]  9 12
+## 
+## $Chen
+## [1] 17 15 16 18
+## 
+## $Dina
+## [1] 11.5  9.0
+## 
+## $Elias
+## [1] 12 14 10</code></pre>
+<pre class="r"><code>nb_notes</code></pre>
+<pre><code>##   Awa Bruno  Chen  Dina Elias 
+##     3     2     4     2     3</code></pre>
+<p>Chaque étudiant a entre 2 et 4 notes : Awa = 3, Bruno = 2, Chen = 4,
+Dina = 2, Elias = 3.</p>
+</div>
+<div id="d-4" class="section level3">
+<h3>d</h3>
+<pre class="r"><code>moyennes &lt;- sapply(notes, mean)
+
+bilan &lt;- data.frame(
+  nom = noms,
+  filiere = filieres,
+  nb_notes = unname(nb_notes),
+  moyenne = unname(moyennes)
+)
+bilan &lt;- bilan[order(bilan$moyenne, decreasing = TRUE), ]
+rownames(bilan) &lt;- NULL
+bilan</code></pre>
+<pre><code>##     nom filiere nb_notes  moyenne
+## 1  Chen    info        4 16.50000
+## 2   Awa    info        3 15.16667
+## 3 Elias    stat        3 12.00000
+## 4 Bruno    stat        2 10.50000
+## 5  Dina     eco        2 10.25000</code></pre>
+</div>
+<div id="e-2" class="section level3">
+<h3>e</h3>
+<p>On ne peut pas les ranger directement dans une matrice, car les
+étudiants n’ont pas tous le même nombre de notes (de 2 à 4) et une
+matrice impose que toutes les lignes aient la même longueur.</p>
+</div>
+</div>
+<div id="d4" class="section level2">
+<h2>D4</h2>
+<pre class="r"><code>phrases &lt;- c(&quot;R est un langage pour la statistique&quot;,
+             &quot;les listes sont partout dans R&quot;,
+             &quot;une liste peut contenir une autre liste&quot;,
+             &quot;les data frames sont des listes de colonnes&quot;,
+             &quot;R renvoie souvent des listes&quot;)</code></pre>
+<div id="a-10" class="section level3">
+<h3>a</h3>
+<pre class="r"><code>mots_par_phrase &lt;- strsplit(phrases, &quot; &quot;)
+nb_mots &lt;- lengths(mots_par_phrase)
+nb_mots</code></pre>
+<pre><code>## [1] 7 6 7 8 5</code></pre>
+<p>Les phrases comptent respectivement 7, 6, 7, 8, 5 mots.</p>
+</div>
+<div id="b-10" class="section level3">
+<h3>b</h3>
+<pre class="r"><code>mots &lt;- tolower(unlist(mots_par_phrase))
+nb_total &lt;- length(mots)
+nb_distincts &lt;- length(unique(mots))</code></pre>
+<p>Il y a 33 mots au total et 24 mots distincts.</p>
+</div>
+<div id="c-10" class="section level3">
+<h3>c</h3>
+<pre class="r"><code>frequences &lt;- sort(table(mots), decreasing = TRUE)
+top3 &lt;- head(frequences, 3)
+top3</code></pre>
+<pre><code>## mots
+## listes      r    des 
+##      3      3      2</code></pre>
+<p>Les 3 mots les plus fréquents sont « listes » (3), « r » (3), « des »
+(2). Plusieurs mots apparaissent 2 fois, donc le 3e est ex aequo avec
+d’autres.</p>
+</div>
+<div id="d-5" class="section level3">
+<h3>d</h3>
+<pre class="r"><code>plus_long &lt;- mots[which.max(nchar(mots))]</code></pre>
+<p>Le mot le plus long est « statistique » (11 lettres).</p>
+</div>
+</div>
+<div id="d5" class="section level2">
+<h2>D5</h2>
+<div id="a-11" class="section level3">
+<h3>a</h3>
+<pre class="r"><code>test &lt;- t.test(extra ~ group, data = sleep)
+diff_moyennes &lt;- unname(test$estimate[1] - test$estimate[2])
+ic &lt;- test$conf.int
+p_valeur &lt;- test$p.value</code></pre>
+<p>La différence des moyennes (groupe 1 moins groupe 2) est de -1.58
+heure, avec un intervalle de confiance à 95 % de [-3.37 ; 0.21] et une
+p-valeur de 0.079.</p>
+</div>
+<div id="b-11" class="section level3">
+<h3>b</h3>
+<pre class="r"><code>modele &lt;- lm(mpg ~ wt + hp, data = mtcars)
+coef(modele)</code></pre>
+<pre><code>## (Intercept)          wt          hp 
+## 37.22727012 -3.87783074 -0.03177295</code></pre>
+<pre class="r"><code>resume &lt;- summary(modele)
+resume$r.squared</code></pre>
+<pre><code>## [1] 0.8267855</code></pre>
+<pre class="r"><code>voiture &lt;- names(which.max(abs(residuals(modele))))</code></pre>
+<p>La voiture dont le résidu est le plus grand en valeur absolue est la
+Toyota Corolla. ```</p>
+</div>
 </div>
 </div>
 
