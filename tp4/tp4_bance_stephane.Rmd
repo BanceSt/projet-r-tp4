@@ -1,0 +1,221 @@
+---
+title: "tp4_Bance_Stephane"
+author: "Stéphane BANCE"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r include=FALSE}
+source("donnees_tp4.R")
+```
+
+
+# Partie A
+## A1 
+
+```{r}
+A = matrix(1:25, 5, 5)
+B = matrix(1:25, 5, 5, byrow = TRUE)
+
+print(paste0(all(B == t(A)), " : B est bien la transposée de A"))
+
+rownames(B) <- paste0("L", 1:5)
+colnames(B) <- paste0("C", 1:5)
+```
+
+### a
+
+```{r}
+B[,3]
+```
+### b
+```{r}
+B[c(1,5),]
+```
+
+### c
+```{r}
+B[,"C1",drop=FALSE]
+```
+
+## A2
+```{r}
+set.seed(4)
+X <- matrix(
+  rnorm(n = 36, mean = 3, sd = sqrt(10)),
+  nrow = 6, 
+  ncol = 6
+)
+
+
+```
+
+### a
+Il y a `r sum(X>3)` valeurs supérieurs à 3.
+
+### b
+La valeur minimun est à la position `r which.min(X)` et la valeur maximun est à la position `r which.max(X)`.
+
+### c
+```{r}
+X01 <- ifelse(X > 3, 1, 0)
+X01
+dim(X01)
+```
+
+## A3
+### a
+```{r}
+rowSums(durer)
+colSums(durer)
+sum(diag(durer))
+sum(diag(durer[, ncol(durer):1]))
+```
+### b
+```{r}
+all(rowSums(durer) == sum(durer[,1])) & all(colSums(durer) == sum(durer[,1])) & 
+sum(diag(durer)) == sum(durer[,1]) & sum(diag(durer[, ncol(durer):1])) == sum(durer[,1])
+```
+### c
+```{r}
+rowSums(candidat)
+colSums(candidat)
+```
+On voie que le problème est à la troisième ligne, troisième colonne. Qui est 1 point trop grand. donc on fait candidat[3, 3] <- candidat[3, 3] - 1.
+```{r}
+candidat[3, 3] <- candidat[3, 3] - 1
+all(rowSums(candidat) == sum(candidat[,1])) & all(colSums(candidat) == sum(candidat[,1])) & 
+sum(diag(candidat)) == sum(candidat[,1]) & sum(diag(candidat[, ncol(candidat):1])) == sum(candidat[,1])
+
+```
+
+
+## A4
+
+```{r}
+nombres <- 1:10
+
+table_mult <- outer(nombres, nombres, "*")
+
+print(table_mult)
+```
+
+### a
+
+
+Il y a `r length(unique(as.vector(table_mult)))` éléments uniques.
+
+### b
+
+Il y a `r mean(table_mult %% 2 == 0) * 100`% de nombre pairs dans la table.
+
+### c
+
+```{r}
+valeurs_dessus <- table_mult[upper.tri(table_mult)]
+
+nb_valeurs <- length(valeurs_dessus)
+```
+Il y a `r nb_valeurs` en dessus de la diagonale.
+
+## A5
+
+### a
+```{r}
+altitude_max <- max(volcano)
+
+positions_max <- which(volcano == altitude_max, arr.ind = TRUE)
+```
+L'altitude max est `r altitude_max` et se trouve à `r positions_max`.
+
+### b
+
+La proportion du terrain en-dessus de 150m est `r mean(volcano > 150) *100`%.
+
+### c
+```{r}
+moyennes_lignes <- rowMeans(volcano)
+ligne_plus_haute <- which.max(moyennes_lignes)
+```
+C'est la ligne `r ligne_plus_haute`.
+
+### d
+```{r}
+deniveles <- apply(volcano, 2, max) - apply(volcano, 2, min);
+colonne_plus_forte <- which.max(deniveles)
+```
+
+C'est la colonne `r colonne_plus_forte`.
+
+### e
+```{r}
+volcano_retourne <- volcano[nrow(volcano):1, ]
+par(mfrow = c(1, 2))
+
+
+image(volcano, main = "Original")
+image(volcano_retourne, main = "Retournée")
+```
+
+# Partie B
+
+## B1
+
+### a
+```{r}
+chiffre_affaire_par_magasin <- Q %*% prix
+chiffre_affaire_par_magasin
+```
+
+### b
+
+```{r}
+marge_par_magasin <- chiffre_affaire_par_magasin - Q %*% cout
+marge_par_magasin
+```
+
+### c
+```{r}
+matrice_ca <- Q %*% diag(prix)
+position_max <- which(matrice_ca == max(matrice_ca), arr.ind = TRUE)
+
+nom_magasin <- rownames(Q)[position_max[1, "row"]]
+nom_produit <- colnames(Q)[position_max[1, "col"]]
+```
+C'est la combinaison `r nom_magasin`x `r nom_produit`
+
+### d
+
+```{r}
+all(rowSums(matrice_ca) == chiffre_affaire_par_magasin)
+```
+
+## B2
+
+### a
+```{r}
+quantites_aliments <- solve(M, stock)
+
+quantites_aliments
+```
+
+### b
+```{r}
+all.equal(as.vector(M %*% quantites_aliments), stock)
+```
+
+### c
+```{r}
+M2 <- M
+M2[4, ] <- M[1, ] + M[2, ]
+M2
+```
+```{r}
+det_M <- det(M2)
+det_M
+```
+
+Le déterminant vaut 0, soit il y'a aucune solution soit une infite. donc solve() va lever une exception.
+
+## B2

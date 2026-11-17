@@ -1,0 +1,6 @@
+"0","all(rowSums(durer) == sum(durer[,1])) & all(colSums(durer) == sum(durer[,1])) & "
+"0","sum(diag(durer)) == sum(durer[,1]) & sum(diag(durer[, ncol(durer):1])) == sum(durer[,1])"
+"1","[1]"
+"1"," TRUE"
+"1","
+"

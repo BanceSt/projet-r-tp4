@@ -1,0 +1,5 @@
+"0","all.equal(as.vector(M %*% quantites_aliments), stock)"
+"1","[1]"
+"1"," TRUE"
+"1","
+"

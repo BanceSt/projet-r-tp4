@@ -1,0 +1,5 @@
+"0","matrice_ca <- Q %*% diag(prix)"
+"0","position_max <- which(matrice_ca == max(matrice_ca), arr.ind = TRUE)"
+"0",""
+"0","nom_magasin <- rownames(Q)[position_max[1, ""row""]]"
+"0","nom_produit <- colnames(Q)[position_max[1, ""col""]]"

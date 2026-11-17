@@ -1,0 +1,7 @@
+"0","candidat[3, 3] <- candidat[3, 3] - 1"
+"0","all(rowSums(candidat) == sum(candidat[,1])) & all(colSums(candidat) == sum(candidat[,1])) & "
+"0","sum(diag(candidat)) == sum(candidat[,1]) & sum(diag(candidat[, ncol(candidat):1])) == sum(candidat[,1])"
+"1","[1]"
+"1"," TRUE"
+"1","
+"

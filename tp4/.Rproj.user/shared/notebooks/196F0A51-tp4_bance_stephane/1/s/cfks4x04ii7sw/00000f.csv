@@ -1,0 +1,5 @@
+"0","all(rowSums(matrice_ca) == chiffre_affaire_par_magasin)"
+"1","[1]"
+"1"," TRUE"
+"1","
+"
